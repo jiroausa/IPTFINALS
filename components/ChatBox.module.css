@@ -1,0 +1,35 @@
+.chatBox {
+  height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  padding: 12px;
+  border-radius: 15px;
+  margin: 6px 0;
+  max-width: 70%;
+  border: 2px solid #d4af37;
+  word-break: break-word;
+}
+
+.user {
+  align-self: flex-end;
+  background-color: #f9e79f;
+}
+
+.bot {
+  align-self: flex-start;
+  background-color: #f7dc6f;
+}
+
+.text,
+.darkText {
+  margin: 0;
+  font-size: 16px;
+}
+
+.darkText {
+  color: #fff;
+}

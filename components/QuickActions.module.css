@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.button {
+  border: 1px solid #d4af37;
+  border-radius: 20px;
+  padding: 8px 14px;
+  background-color: #ffe082;
+  cursor: pointer;
+  font-family: serif;
+  white-space: nowrap;
+}
+
+.dark {
+  background-color: #333;
+  color: #fff;
+}

@@ -1,65 +1,95 @@
-import Image from "next/image";
-
-export default function Home() {
+"use client";
+import { useState, useRef } from "react";
+import axios from "axios";
+import QuickActions from "@/components/QuickActions";
+import ChatBox from "@/components/ChatBox";
+import styles from "./page.module.css";
+type Message = {
+  id: string;
+  text: string;
+  sender: "user" | "bot";
+};
+export default function HomePage() {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [darkMode, setDarkMode] = useState(false);
+  const listRef = useRef<HTMLDivElement>(null);
+  const sendMessage = async (customText?: string) => {
+    const textToSend = (customText || input).trim();
+    if (!textToSend) return;
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      text: textToSend,
+      sender: "user",
+    };
+    setMessages((prev) => [...prev, userMsg]);
+    setInput("");
+  try {
+      // ✅ FIXED: Correct Axios URL
+      const res = await axios.post("http://localhost:8000/ask", {
+        message: textToSend,
+      });
+      const botMsg: Message = {
+        id: Date.now().toString() + "_b",
+        text: res.data.response,
+        sender: "bot",
+      };
+      setMessages((prev) => [...prev, botMsg]);
+      setTimeout(() => {
+        listRef.current?.scrollTo({
+          top: listRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 100);
+    } catch (error) {
+      console.error("Connection error:", error);
+      const botErr: Message = {
+        id: Date.now().toString() + "_err",
+        text: "⚠️ Cannot connect to server",
+        sender: "bot",
+      };
+      setMessages((prev) => [...prev, botErr]);
+    }
+  };
+  const quickActions = [
+    "Who is Zeus?",
+    "Who is Hades' wife?",
+    "Zeus vs Poseidon",
+    "Show power ranking",
+    "What is Apollo god of?",
+  ];
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className={`${styles.container} ${darkMode ? styles.dark : ""}`}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>🏛️ AskGreekGodsBot</h1>
+        <div
+          className={styles.toggleSwitch}
+          onClick={() => setDarkMode(!darkMode)}
+        >
+          <div className={`${styles.toggleThumb} ${darkMode ? styles.active : ""}`}>
+            {darkMode ? "🌙" : "☀️"}
+          </div>
+        </div>
+      </header>
+      <QuickActions
+        actions={quickActions}
+        darkMode={darkMode}
+        onClick={(q: string | undefined) => sendMessage(q)}
+      />
+      <ChatBox ref={listRef} messages={messages} darkMode={darkMode} />
+      <div className={styles.inputContainer}>
+        <input
+          type="text"
+          placeholder="Ask about any god..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          className={`${styles.input} ${darkMode ? styles.inputDark : ""}`}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        <button onClick={() => sendMessage()} className={styles.button}>
+          Send
+        </button>
+      </div>
+    </main>
   );
 }
