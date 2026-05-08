@@ -26,7 +26,7 @@ export default function HomePage() {
     setInput("");
   try {
       // ✅ FIXED: Correct Axios URL
-      const res = await axios.post("http://localhost:8000/ask", {
+      const res = await axios.post("https://backend-jb1z.onrender.com/", {
         message: textToSend,
       });
       const botMsg: Message = {
@@ -92,4 +92,6 @@ export default function HomePage() {
       </div>
     </main>
   );
+
+
 }
