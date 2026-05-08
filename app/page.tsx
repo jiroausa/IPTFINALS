@@ -26,9 +26,9 @@ export default function HomePage() {
     setInput("");
   try {
       // ✅ FIXED: Correct Axios URL
-      const res = await axios.post("https://backend-jb1z.onrender.com/", {
-        message: textToSend,
-      });
+const res = await axios.post("https://backend-jb1z.onrender.com/ask", {
+  message: textToSend,
+});
       const botMsg: Message = {
         id: Date.now().toString() + "_b",
         text: res.data.response,
