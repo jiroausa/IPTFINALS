@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,6,0,0.65);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+.overlayDark { background: rgba(0,0,0,0.78); }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.modal {
+  position: relative;
+  background: #faf6ee;
+  border-radius: 4px;
+  width: 100%; max-width: 420px;
+  padding: 36px 32px 30px;
+  box-shadow: 0 0 0 1px rgba(180,150,80,0.3), 0 32px 72px rgba(0,0,0,0.2);
+  animation: slideUp 0.25s cubic-bezier(0.34,1.4,0.64,1);
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+.modal::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37 30%, #c08700 50%, #d4af37 70%, transparent);
+  border-radius: 4px 4px 0 0;
+}
+.modalDark {
+  background: #111118;
+  box-shadow: 0 0 0 1px rgba(160,120,48,0.3), 0 32px 72px rgba(0,0,0,0.6);
+  color: #ede8da;
+}
+@keyframes slideUp {
+  from { opacity:0; transform: translateY(20px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+.closeBtn {
+  position: absolute; top: 14px; right: 16px;
+  background: none; border: none; font-size: 16px; cursor: pointer;
+  color: #b0986a; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px; transition: background 0.15s, color 0.15s;
+}
+.closeBtn:hover { background: rgba(180,150,80,0.12); color: #7a5c1e; }
+
+.header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 24px;
+}
+.avatarLg {
+  width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  color: #1a0f00;
+  font-family: 'Cinzel', serif;
+  font-size: 17px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid rgba(212,175,55,0.5);
+  box-shadow: 0 2px 12px rgba(212,175,55,0.25);
+}
+.avatarDark { border-color: rgba(212,175,55,0.3); }
+
+.title {
+  font-family: 'Cinzel', serif;
+  font-size: 17px; font-weight: 700;
+  color: #2c1f0e; margin: 0 0 4px;
+  letter-spacing: 0.3px;
+}
+.modalDark .title { color: #ede8da; }
+.subtitle {
+  font-family: 'Crimson Pro', serif;
+  font-size: 13px; font-style: italic; font-weight: 300;
+  color: #8a7050; margin: 0;
+}
+.modalDark .subtitle { color: #6a5a3a; }
+
+.sectionLabel {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: #c9a84c; margin: 0 0 12px;
+  border-bottom: 1px solid rgba(180,150,80,0.2);
+  padding-bottom: 6px;
+}
+
+.form { display: flex; flex-direction: column; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: #7a6040;
+}
+.modalDark .label { color: #8a7050; }
+
+.input {
+  padding: 10px 14px;
+  border: 1px solid rgba(180,150,80,0.35);
+  border-radius: 4px;
+  font-size: 15px; font-family: 'Crimson Pro', serif;
+  outline: none; background: #fff; color: #2c1f0e;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input:focus { border-color: #c9a84c; box-shadow: 0 0 0 3px rgba(212,175,55,0.1); }
+.inputDark { background: #1a1a24; border-color: rgba(140,110,48,0.3); color: #ede8da; }
+.inputDark:focus { border-color: #a07830; box-shadow: 0 0 0 3px rgba(160,120,48,0.12); }
+
+.saveBtn {
+  margin-top: 6px;
+  padding: 12px;
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 50%, #d4af37 100%);
+  background-size: 200% 200%;
+  color: #1a0f00;
+  border: none; border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer;
+  transition: background-position 0.4s, transform 0.15s, box-shadow 0.2s;
+}
+.saveBtn:hover {
+  background-position: right center;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(212,175,55,0.35);
+}
+.saveBtnSaved {
+  background: linear-gradient(135deg, #4a7a30, #2d5c1a) !important;
+  color: #fff !important;
+  transform: none !important;
+}

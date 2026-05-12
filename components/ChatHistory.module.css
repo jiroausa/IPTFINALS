@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Crimson+Pro:wght@300;400&display=swap');
+
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background: #f0ead8;
+  border-right: 1px solid rgba(180,150,80,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: background 0.4s;
+}
+.sidebarDark {
+  background: #0d0d16;
+  border-right-color: rgba(140,110,48,0.2);
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid rgba(180,150,80,0.2);
+}
+.sidebarTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #c9a84c;
+}
+
+.newBtn {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(180,150,80,0.4);
+  background: transparent;
+  color: #c9a84c;
+  font-size: 18px; line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, transform 0.15s;
+}
+.newBtn:hover { background: rgba(212,175,55,0.12); transform: scale(1.1); }
+.newBtnDark { border-color: rgba(140,110,48,0.3); }
+
+.sessionList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 8px;
+}
+.sessionList::-webkit-scrollbar { width: 4px; }
+.sessionList::-webkit-scrollbar-thumb { background: rgba(180,150,80,0.25); border-radius: 4px; }
+
+.empty {
+  font-family: 'Crimson Pro', serif;
+  font-size: 13px; font-weight: 300; font-style: italic;
+  color: #a09070;
+  text-align: center;
+  padding: 30px 16px;
+  line-height: 1.7;
+}
+
+.sessionItem {
+  position: relative;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: background 0.15s;
+  border: 1px solid transparent;
+}
+.sessionItem:hover { background: rgba(212,175,55,0.1); }
+.sessionItem:hover .deleteBtn { opacity: 1; }
+.sessionItemDark:hover { background: rgba(212,175,55,0.07); }
+
+.sessionActive {
+  background: rgba(212,175,55,0.14) !important;
+  border-color: rgba(180,150,80,0.3) !important;
+}
+
+.sessionMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3px;
+}
+.sessionTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 11px; font-weight: 600;
+  color: #5c4010;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 130px;
+}
+.sidebarDark .sessionTitle { color: #c9a84c; }
+
+.sessionTime {
+  font-family: 'Crimson Pro', serif;
+  font-size: 11px; font-weight: 300;
+  color: #a09070; flex-shrink: 0; margin-left: 6px;
+}
+.sidebarDark .sessionTime { color: #5a4a2a; }
+
+.sessionPreview {
+  font-family: 'Crimson Pro', serif;
+  font-size: 12px; font-weight: 300;
+  color: #7a6040; margin: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sidebarDark .sessionPreview { color: #5a4a2a; }
+
+.deleteBtn {
+  position: absolute; top: 8px; right: 8px;
+  background: none; border: none;
+  font-size: 10px; color: #b0906a;
+  cursor: pointer; opacity: 0;
+  width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 3px;
+  transition: opacity 0.15s, background 0.15s;
+}
+.deleteBtn:hover { background: rgba(180,60,20,0.12); color: #a03010; opacity: 1; }

@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 6, 0, 0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+.overlayDark { background: rgba(0, 0, 0, 0.78); }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  position: relative;
+  background: #faf6ee;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 36px 32px;
+  box-shadow: 0 0 0 1px rgba(180,150,80,0.3), 0 32px 72px rgba(0,0,0,0.22), 0 0 60px rgba(212,175,55,0.08);
+  animation: slideUp 0.28s cubic-bezier(0.34,1.4,0.64,1);
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+.modal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37 30%, #c08700 50%, #d4af37 70%, transparent);
+  border-radius: 4px 4px 0 0;
+}
+.modalDark {
+  background: #111118;
+  box-shadow: 0 0 0 1px rgba(160,120,48,0.3), 0 32px 72px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.05);
+  color: #ede8da;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #b0986a;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+.closeBtn:hover { background: rgba(180,150,80,0.12); color: #7a5c1e; }
+
+.modalHeader { text-align: center; margin-bottom: 24px; }
+.logo { font-size: 36px; line-height: 1; margin-bottom: 14px; }
+.modalTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 18px; font-weight: 700;
+  margin: 0 0 6px;
+  color: #2c1f0e;
+  letter-spacing: 0.5px;
+}
+.modalDark .modalTitle { color: #ede8da; }
+.modalSubtitle {
+  font-family: 'Crimson Pro', serif;
+  font-size: 15px; font-style: italic; font-weight: 300;
+  color: #8a7050; margin: 0;
+}
+.modalDark .modalSubtitle { color: #8a7a5a; }
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(180,150,80,0.25);
+  margin-bottom: 22px;
+}
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-family: 'Cinzel', serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #a08860;
+  transition: color 0.2s, border-color 0.2s;
+  margin-bottom: -1px;
+}
+.modalDark .tab { color: #6a5a3a; }
+.tabActive { color: #8b6200; border-bottom-color: #d4af37; }
+.modalDark .tabActive { color: #d4af37; border-bottom-color: #d4af37; }
+
+.form { display: flex; flex-direction: column; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #7a6040;
+}
+.modalDark .label { color: #8a7050; }
+
+.input {
+  padding: 10px 14px;
+  border: 1px solid rgba(180,150,80,0.35);
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: 'Crimson Pro', serif;
+  outline: none;
+  background: #fff;
+  color: #2c1f0e;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input::placeholder { color: #c0a870; font-style: italic; }
+.input:focus { border-color: #c9a84c; box-shadow: 0 0 0 3px rgba(212,175,55,0.1); }
+.inputDark { background: #1a1a24; border-color: rgba(140,110,48,0.3); color: #ede8da; }
+.inputDark::placeholder { color: #5a4a2a; }
+.inputDark:focus { border-color: #a07830; box-shadow: 0 0 0 3px rgba(160,120,48,0.12); }
+
+.errorMsg {
+  font-family: 'Crimson Pro', serif;
+  font-size: 14px; color: #8b2000;
+  margin: 0; padding: 8px 12px;
+  background: rgba(139,32,0,0.06);
+  border-left: 2px solid #c0392b;
+  border-radius: 0 4px 4px 0;
+}
+
+.forgotRow { display: flex; justify-content: flex-end; }
+.forgotLink {
+  background: none; border: none;
+  font-family: 'Crimson Pro', serif;
+  font-size: 13px; font-style: italic;
+  color: #a07830; cursor: pointer; padding: 0;
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.modalDark .forgotLink { color: #c9a84c; }
+
+.submitBtn {
+  padding: 12px;
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 50%, #d4af37 100%);
+  background-size: 200% 200%;
+  color: #1a0f00;
+  border: none; border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer;
+  transition: background-position 0.4s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 46px;
+  position: relative; overflow: hidden;
+}
+.submitBtn::before {
+  content: '';
+  position: absolute; top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+.submitBtn:hover::before { left: 130%; }
+.submitBtn:hover:not(:disabled) {
+  background-position: right center;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(212,175,55,0.35);
+}
+.submitBtn:active:not(:disabled) { transform: translateY(0); }
+.submitLoading { opacity: 0.7; cursor: not-allowed; }
+
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(26,15,0,0.3);
+  border-top-color: #1a0f00;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.switchText {
+  text-align: center;
+  font-family: 'Crimson Pro', serif;
+  font-size: 14px; color: #8a7050;
+  margin: 18px 0 0;
+}
+.modalDark .switchText { color: #6a5a3a; }
+.switchLink {
+  background: none; border: none;
+  font-family: 'Crimson Pro', serif;
+  font-size: 14px; font-weight: 600;
+  color: #8b6200; cursor: pointer; padding: 0;
+  text-decoration: underline; text-underline-offset: 2px;
+}
