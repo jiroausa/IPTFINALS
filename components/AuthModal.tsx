@@ -150,12 +150,6 @@ export default function AuthModal({ onClose, onLogin, darkMode }: AuthModalProps
 
           {error && <p className={styles.errorMsg}>{error}</p>}
 
-          {mode === "login" && (
-            <div className={styles.forgotRow}>
-              <button type="button" className={styles.forgotLink}>Forgot password?</button>
-            </div>
-          )}
-
           <button
             type="submit"
             className={`${styles.submitBtn} ${loading ? styles.submitLoading : ""}`}

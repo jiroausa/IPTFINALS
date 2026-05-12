@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { updateProfile } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import styles from "./ProfileSettings.module.css";
 import type { User } from "./AuthModal";
 
@@ -12,19 +14,31 @@ interface ProfileSettingsProps {
 
 export default function ProfileSettings({ user, darkMode, onClose, onSave }: ProfileSettingsProps) {
   const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [currentPw, setCurrentPw] = useState("");
-  const [newPw, setNewPw] = useState("");
+  const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState("");
 
   const getInitials = (n: string) =>
     n.trim().split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSave({ name, email, initials: getInitials(name) });
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    if (!name.trim()) { setError("Name cannot be empty."); return; }
+    setError("");
+    setSaving(true);
+    try {
+      // Save display name to Firebase Auth so it persists after logout
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, { displayName: name.trim() });
+      }
+      onSave({ name: name.trim(), email: user.email, initials: getInitials(name.trim()) });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch {
+      setError("Failed to save. Please try again.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -53,45 +67,30 @@ export default function ProfileSettings({ user, darkMode, onClose, onSave }: Pro
               type="text"
               className={`${styles.input} ${darkMode ? styles.inputDark : ""}`}
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => { setName(e.target.value); setSaved(false); }}
               placeholder="Your name"
             />
           </div>
+
           <div className={styles.field}>
             <label className={styles.label}>Email address</label>
             <input
               type="email"
               className={`${styles.input} ${darkMode ? styles.inputDark : ""}`}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@olympus.com"
+              value={user.email}
+              disabled
+              style={{ opacity: 0.6, cursor: "not-allowed" }}
             />
           </div>
 
-          <div className={styles.sectionLabel} style={{ marginTop: "20px" }}>Change Password</div>
-          <div className={styles.field}>
-            <label className={styles.label}>Current password</label>
-            <input
-              type="password"
-              className={`${styles.input} ${darkMode ? styles.inputDark : ""}`}
-              value={currentPw}
-              onChange={(e) => setCurrentPw(e.target.value)}
-              placeholder="••••••••"
-            />
-          </div>
-          <div className={styles.field}>
-            <label className={styles.label}>New password</label>
-            <input
-              type="password"
-              className={`${styles.input} ${darkMode ? styles.inputDark : ""}`}
-              value={newPw}
-              onChange={(e) => setNewPw(e.target.value)}
-              placeholder="••••••••"
-            />
-          </div>
+          {error && <p className={styles.errorMsg}>{error}</p>}
 
-          <button type="submit" className={`${styles.saveBtn} ${saved ? styles.saveBtnSaved : ""}`}>
-            {saved ? "✓ Saved!" : "Save Changes"}
+          <button
+            type="submit"
+            className={`${styles.saveBtn} ${saved ? styles.saveBtnSaved : ""}`}
+            disabled={saving}
+          >
+            {saving ? "Saving..." : saved ? "✓ Saved!" : "Save Changes"}
           </button>
         </form>
       </div>
