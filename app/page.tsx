@@ -298,7 +298,7 @@ export default function HomePage() {
               className={`${styles.input} ${darkMode ? styles.inputDark : ""}`}
             />
             <button onClick={() => sendMessage()} className={styles.button}>
-              Consult
+              SEND
             </button>
           </div>
         </div>
